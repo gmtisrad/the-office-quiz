@@ -1,0 +1,51 @@
+.content {
+	display: flex;
+	flex: 1 0 auto;
+	flex-direction: column;
+	text-align: left;
+	margin: 0 auto;
+}
+
+.quiz-block {
+	border: 1px solid black;
+	justify-content: center;
+}
+
+.info {
+	flex-direction: row;
+	flex: 0 1 auto;
+}
+
+.quiz-options {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	list-style: none;
+	padding: 0;
+}
+
+@media screen and (max-width: 420px) {
+	html {
+		font-size: 18px;
+	}
+	h1 {
+		padding: 0;
+		margin: 0;
+
+	}
+	h2 {
+		padding: 0;
+		margin: 0;
+		font-size: 20px;
+	}
+	.content {
+		padding: 1rem;
+	}
+	.quiz-option, button {
+		flex-basis: calc(50% - 40px);
+		padding: 20px;
+
+	}
+}
+
+
