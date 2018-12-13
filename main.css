@@ -1,6 +1,11 @@
 html {
-	min-width: 100vw;
-	min-height: 100vh;
+	background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://cdn2us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/images/11164.jpg?itok=HSqmSLTt);
+	background-color: white;
+	color: white;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	min-height: 100%;
 }
 
 .content {
@@ -17,10 +22,13 @@ header {
 	flex-direction: row;
 	justify-content: space-around;
 }
-.info h1 {
-	padding: 0;
-	flex: 0 1 auto;
+
+.gif-container {
+	position: fixed;
+	top: 10%;
+	left: calc(50% - 220px);
 }
+
 .info h2 {
 	padding: 0 1rem;
 }
@@ -33,20 +41,51 @@ header {
 	padding: 1rem;
 }
 
+.main-start {
+	height: 100vh;
+	width: 100vw;
+}
+
+.start-layout {
+	position: fixed;
+	left: calc(50% - 83px);
+	top: 50%;
+}
+
+h3 {
+	color: black;
+}
+
 .quiz-option {
 	text-align: center;
 	margin-top: 40px;
+	margin-bottom: 30px;
+	width: 400px;
+	height: 400px;
+	overflow: hidden;
 }
 
-.quiz-question {
-	display: block;
+input[type='image'] {
+	width: 400px;
 }
 
 .quiz-block {
-	border: 1px solid lightgrey;
+	border: 1px solid grey;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.start-button {
+	padding: 20px 40px;
+	text-align:center;
+	font-size: 40px;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: 2px 2px 5px black;
+	margin: auto auto;
 }
 
 
@@ -60,6 +99,12 @@ header {
 	input[type='image'] {
 		width: 125px;
 	}
+
+	.start-layout {
+		position: fixed;
+		left: calc(50% - 83px);
+		top: 50%;
+	}	
 }
 
 @media screen and (min-width: 421px) and (max-width: 1024px) {
@@ -67,6 +112,12 @@ header {
 		height: 325px;
 		width: 325px;
 		overflow: hidden;
+	}
+
+	.start-layout {
+		position: fixed;
+		left: calc(50% - 83px);
+		top: 50%;
 	}
 
 	input[type='image'] {
