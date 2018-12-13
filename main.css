@@ -4,48 +4,37 @@
 	flex-direction: column;
 	text-align: left;
 	margin: 0 auto;
-}
-
-.quiz-block {
-	border: 1px solid black;
-	justify-content: center;
+	width: 60vw;
 }
 
 .info {
-	flex-direction: row;
-	flex: 0 1 auto;
-}
-
-.quiz-options {
 	display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
-	list-style: none;
-	padding: 0;
+}
+.radio-group input {
+	visibility: hidden;
+}
+.quiz-option {
+	margin: 10px 5px;
+	text-align: center;
+}
+
+.quiz-question {
+	display: block;
+}
+
+.quiz-block {
+	border: 1px solid lightgrey;
+	display: flex;
+	flex-direction: column;
+}
+
+input:checked + label {
+	background-color: green;
+	color: white;
 }
 
 @media screen and (max-width: 420px) {
-	html {
-		font-size: 18px;
-	}
-	h1 {
-		padding: 0;
-		margin: 0;
-
-	}
-	h2 {
-		padding: 0;
-		margin: 0;
-		font-size: 20px;
-	}
-	.content {
-		padding: 1rem;
-	}
-	.quiz-option, button {
-		flex-basis: calc(50% - 40px);
-		padding: 20px;
-
-	}
 }
 
 
