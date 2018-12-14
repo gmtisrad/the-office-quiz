@@ -145,9 +145,9 @@ function createOption (currentQuestion, optionsUsed) {
     if (optionsUsed.length == 0) {
         optionsUsed.push(QUESTIONS[currentQuestion].answer);
         quizOptionHtml = (
-            `<div class='quiz-option'>
+            `<label class='quiz-option'>
                 <input type="image" src='./images/${optionsUsed[0]}.jpg' alt='${optionsUsed[0]}' name='${optionsUsed[0]}' id='answer${optionsUsed.length}'>
-            </div>`);
+            </label>`);
     }
     else {
         do {
@@ -155,9 +155,9 @@ function createOption (currentQuestion, optionsUsed) {
         } while(checkOptionUsed(option, optionsUsed));
         optionsUsed.push(option);
         quizOptionHtml = (
-            `<div class='quiz-option'>
+            `<label class='quiz-option'>
                 <input type="image" src='./images/${option}.jpg' alt='${option}' name='${option}' id='answer${optionsUsed.length}'>
-            </div>`);
+            </label>`);
      }
     return (quizOptionHtml);
     //This function will use the currentQuestion, and optionsUsed variables to create a new option randomly
