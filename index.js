@@ -16,14 +16,14 @@ const QUESTIONS = [
     {question: 'Which character is known to have slept in their car after a messy divorce?',
     answer: 'floby',
     number: 5},
-    {question: 'Who is most likely to donate to aids for afghanistananis?',
-    answer: 'jim',
+    {question: 'Which character has Oscar dated?',
+    answer: 'senator',
     number: 6},
     {question: 'Who had an affair while married to Angela?',
     answer: 'senator',
     number: 7},
-    {question: 'Who knows random facts about the sun?',
-    answer: 'andy',
+    {question: 'Who wears sandals on casual Friday?',
+    answer: 'oscar',
     number: 8},
     {question: 'Who\'s car did Micheal Scott hit with a watermellon?',
     answer: 'stanley',
@@ -60,6 +60,8 @@ function renderQuizPage(currentQuestion, correct){
 
     const quizPage = createQuizPage(currentQuestion, correct);
     $('body').html(quizPage);
+
+    handleOptionChoose(currentQuestion, correct);
     //The createQuizPage function should be called.
 }
 
@@ -89,10 +91,18 @@ function createHeader (currentQuestion, correct){
 
 function createQuestion (currentQuestion){
     //This function should create and return the question html to be rendered to the Dom
-    const question = QUESTIONS[currentQuestion];
-    let optionsUsed = []
+    const question = QUESTIONS[currentQuestion].question;
+    let optionsUsed = [];
+    let options = [];
 
     console.log('createQuestion called');
+
+    options.push(createOption(currentQuestion, optionsUsed));
+    options.push(createOption(currentQuestion, optionsUsed));
+    options.push(createOption(currentQuestion, optionsUsed));
+    options.push(createOption(currentQuestion, optionsUsed));
+
+    shuffleOptions(options);
 
     const questionHtml = 
         `<div class='content'>
@@ -100,11 +110,11 @@ function createQuestion (currentQuestion){
                 <form class='quiz-form js-quiz-form'>
                     <div class='quiz-block'>
                         <h3 class='quiz-question'>${question}</h3>
-                       <div class='radio-group js-radio-group'>
-                            ${createOption(currentQuestion, optionsUsed)}
-                            ${createOption(currentQuestion, optionsUsed)}
-                            ${createOption(currentQuestion, optionsUsed)}
-                            ${createOption(currentQuestion, optionsUsed)}
+                        <div class='radio-group js-radio-group'>
+                            ${options[0]}
+                            ${options[1]}
+                            ${options[2]}
+                            ${options[3]}
                         </div>
                     </div>
                 </form>
@@ -115,6 +125,16 @@ function createQuestion (currentQuestion){
     //Ideally, logic to randomize quiz options would be possible.
 }
 
+function shuffleOptions (options) {
+    for (let i = 0; i < 100; i++) {
+        let random = Math.floor(Math.random() * 4);
+        let placeHolder = options[0];
+        options[0] = options[random];
+        options[random] = placeHolder;
+    }
+
+}
+
 function createOption (currentQuestion, optionsUsed) {
     //This function should create and return an option (image) to be rendered to the DOM
     let quizOptionHtml = '';
@@ -123,7 +143,6 @@ function createOption (currentQuestion, optionsUsed) {
     console.log('createOption called');
 
     if (optionsUsed.length == 0) {
-        alert (currentQuestion);
         optionsUsed.push(QUESTIONS[currentQuestion].answer);
         quizOptionHtml = (
             `<div class='quiz-option'>
@@ -137,7 +156,7 @@ function createOption (currentQuestion, optionsUsed) {
         optionsUsed.push(option);
         quizOptionHtml = (
             `<div class='quiz-option'>
-                <input type="image" src='./images/${optionsUsed[optionsUsed.length]}.jpg' alt='${optionsUsed[optionsUsed.length]}' name='${optionsUsed[optionsUsed.length]}' id='answer${optionsUsed.length}'>
+                <input type="image" src='./images/${option}.jpg' alt='${option}' name='${option}' id='answer${optionsUsed.length}'>
             </div>`);
      }
     return (quizOptionHtml);
@@ -161,22 +180,68 @@ function checkOptionUsed (id, optionsUsed) {
     return isUsed;
 }
 
-function renderSuccessPage(){
-    //This function should render the success page to the DOM
-}
-
-function renderFailurePage(){
-    //This function should render the failure page to the DOM
-}
-
-function renderCompletePage(){
-    //This function should render the quiz-complete page
-
+function renderSuccessPage(currentQuestion, correct){
     $('body').html(
-        `<div class='gif-container'><img src='https://media.giphy.com/media/vDjcGXLiFKLle/giphy.gif' alt='complete-gif'></div>
+        `<div class='gif-container'><img src='http://www.thedailyaztec.com/wp-content/uploads/2015/01/M-Scott14.gif' alt='success-gif'></div>
         <div class='start-layout'>
-            <button class='start-button'>Start</button>
+            <button class='start-button js-start-button'>Next</button>
         </div>`);
+    handleStart(currentQuestion, correct);
 }
 
-$(renderQuizPage(0, 0));
+function renderFailurePage(currentQuestion, correct){
+    $('body').html(
+        `<div class='gif-container'><img src='https://media.giphy.com/media/d10dMmzqCYqQ0/giphy.gif' alt='failure-gif'></div>
+        <div class='start-layout'>
+            <button class='start-button js-start-button'>Next</button>
+        </div>`);
+    handleStart(currentQuestion, correct);
+}
+
+function renderCompletePage(currentQuestion, correct){
+    //This function should render the quiz-complete page
+    $('body').html(
+        `${createHeader(currentQuestion, correct)}<div class='gif-container'><img src='https://media.giphy.com/media/vDjcGXLiFKLle/giphy.gif' alt='complete-gif'></div>
+        <div class='start-layout'>
+            <button class='start-button js-start-button'>Again?</button>
+        </div>`);
+    handleStart(0, 0);
+}
+
+function renderStartPage(currentQuestion, correct) {
+    $('body').html(`
+        <main class='main-start'>
+            <div class='start-layout'>
+                <button class='start-button js-start-button'>Start</button>
+            </div>
+        </main>`);
+    handleStart(currentQuestion, correct);
+}
+
+function handleOptionChoose(currentQuestion, correct) {
+    $('.js-quiz-form').on('click', 'input[type=image]', function(event) {
+        event.preventDefault();
+        
+        if ($(this).attr('name') == QUESTIONS[currentQuestion].answer){
+            correct++;
+            currentQuestion++;
+            renderSuccessPage(currentQuestion, correct);
+        }
+        else {
+            currentQuestion++;
+            renderFailurePage(currentQuestion, correct);
+        }
+        if(currentQuestion == 10) {
+            renderCompletePage(currentQuestion, correct);
+        }
+    });
+}
+
+function handleStart(currentQuestion, correct){
+    $('.js-start-button').on('click', (event) => {
+        event.preventDefault();
+        renderQuizPage(currentQuestion, correct);
+    });
+}
+
+$(renderStartPage(0, 0));

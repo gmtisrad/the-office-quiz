@@ -26,7 +26,7 @@ header {
 .gif-container {
 	position: fixed;
 	top: 10%;
-	left: calc(50% - 220px);
+	left: calc(50% - 205px);
 }
 
 .info h2 {
@@ -54,6 +54,7 @@ header {
 
 h3 {
 	color: black;
+	font-size: 28px;
 }
 
 .quiz-option {
@@ -65,17 +66,21 @@ h3 {
 	overflow: hidden;
 }
 
+.quiz-option:hover {
+	border: 10px solid blue;
+}
+
 input[type='image'] {
 	width: 400px;
 }
 
 .quiz-block {
-	border: 1px solid grey;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
 	background-color: white;
 	border-radius: 10px;
+	box-shadow: 20px 20px 20px black;
 }
 
 .start-button {
@@ -99,11 +104,14 @@ input[type='image'] {
 	input[type='image'] {
 		width: 125px;
 	}
+	.gif-container {
+		top: 25%;
+	}
 
 	.start-layout {
 		position: fixed;
 		left: calc(50% - 83px);
-		top: 50%;
+		top: 60%;
 	}	
 }
 
