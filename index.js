@@ -56,41 +56,17 @@ const OPTIONS = [
 
 function renderQuizPage(currentQuestion, correct){
     //This should render the question page to the DOM
-    $('body').html(`<div class='content'>
-    <header class='quiz-header'>
-        <h1>The Office Quiz</h1>
-        <div class="info js-info">
-            <h2 class='questions-answered js-questions-answered'>Answered: 4/10</h2>
-            <h2 class='questions-correct js-questions-correct'>Correct: 4</h2>
-        </div>
-    </header>
-    <main class='js-main-quiz'>
-        <form class='quiz-form js-quiz-form'>
-            <div class='quiz-block'>
-                <h3 class='quiz-question'>Question Here</h3>
-                <div class='radio-group js-radio-group'>
-                    <div class='quiz-option'>
-                        <input type="image" src='./images/angela.jpg' alt='angela' name='answer' id='answer1'>
-                    </div>
-                    <div class='quiz-option'>
-                        <input type="image" src='./images/kevin.jpg' alt='kevin' name='answer' id='answer2'>
-                    </div>
-                    <div class='quiz-option'>
-                        <input type='image' src='./images/floby.jpg' alt='floby' name='answer' id='answer3'>
-                    </div>
-                    <div class='quiz-option'>
-                        <input type="image" src='./images/stanley.jpg' alt='stanley' name='answer' id='answer4'>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </main>
-</div>`);
+    console.log('renderQuizPage called')
+
+    const quizPage = createQuizPage(currentQuestion, correct);
+    $('body').html(quizPage);
     //The createQuizPage function should be called.
 }
 
 function createQuizPage(currentQuestion, correct){
     //This function should create and return a string to be rendered to the DOM
+    console.log('createQuizPage');
+
     const quizPageHtml = createHeader(currentQuestion, correct) + createQuestion(currentQuestion);
     return quizPageHtml;
 
@@ -99,19 +75,90 @@ function createQuizPage(currentQuestion, correct){
 
 function createHeader (currentQuestion, correct){
     //This function should create and return the header to be rendered to the page using the arguments to show state
+    console.log('createHeader called');
+
+    const headerHtml = `<header class='quiz-header'>
+    <h1>The Office Quiz</h1>
+    <div class="info js-info">
+        <h2 class='questions-answered js-questions-answered'>Answered: ${currentQuestion}/10</h2>
+        <h2 class='questions-correct js-questions-correct'>Correct: ${correct}</h2>
+    </div>
+</header>`;
+    return headerHtml;
 }
 
 function createQuestion (currentQuestion){
     //This function should create and return the question html to be rendered to the Dom
+    const question = QUESTIONS[currentQuestion];
+    let optionsUsed = []
 
+    console.log('createQuestion called');
+
+    const questionHtml = 
+        `<div class='content'>
+            <main class='js-main-quiz'>
+                <form class='quiz-form js-quiz-form'>
+                    <div class='quiz-block'>
+                        <h3 class='quiz-question'>${question}</h3>
+                       <div class='radio-group js-radio-group'>
+                            ${createOption(currentQuestion, optionsUsed)}
+                            ${createOption(currentQuestion, optionsUsed)}
+                            ${createOption(currentQuestion, optionsUsed)}
+                            ${createOption(currentQuestion, optionsUsed)}
+                        </div>
+                    </div>
+                </form>
+            </main>
+        </div>`;
+    return questionHtml
     //The createOption function should be called 4 times. Once for each quiz answer option.
     //Ideally, logic to randomize quiz options would be possible.
 }
 
 function createOption (currentQuestion, optionsUsed) {
     //This function should create and return an option (image) to be rendered to the DOM
+    let quizOptionHtml = '';
+    let option = '';
 
+    console.log('createOption called');
+
+    if (optionsUsed.length == 0) {
+        alert (currentQuestion);
+        optionsUsed.push(QUESTIONS[currentQuestion].answer);
+        quizOptionHtml = (
+            `<div class='quiz-option'>
+                <input type="image" src='./images/${optionsUsed[0]}.jpg' alt='${optionsUsed[0]}' name='${optionsUsed[0]}' id='answer${optionsUsed.length}'>
+            </div>`);
+    }
+    else {
+        do {
+            option = (OPTIONS[Math.floor(Math.random() * 9)].id);
+        } while(checkOptionUsed(option, optionsUsed));
+        optionsUsed.push(option);
+        quizOptionHtml = (
+            `<div class='quiz-option'>
+                <input type="image" src='./images/${optionsUsed[optionsUsed.length]}.jpg' alt='${optionsUsed[optionsUsed.length]}' name='${optionsUsed[optionsUsed.length]}' id='answer${optionsUsed.length}'>
+            </div>`);
+     }
+    return (quizOptionHtml);
     //This function will use the currentQuestion, and optionsUsed variables to create a new option randomly
+}
+
+function checkOptionUsed (id, optionsUsed) {
+    //This function will check if an option is currently a part of the set optionsUsed based on the passed id
+    //Returns true if the option is already in use.
+    let isUsed = false;
+
+    console.log(optionsUsed);
+
+    for (let i = 0; i < optionsUsed.length; i++) {
+        if (id == optionsUsed[i]) {
+            isUsed = true;
+            console.log(optionsUsed[i]);
+        }
+    }
+
+    return isUsed;
 }
 
 function renderSuccessPage(){
@@ -132,4 +179,4 @@ function renderCompletePage(){
         </div>`);
 }
 
-$(renderQuizPage());
+$(renderQuizPage(0, 0));
