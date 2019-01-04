@@ -7,6 +7,11 @@ html {
 	background-repeat: no-repeat;
 	min-height: 100%;
 }
+body {
+	height: 100vh;
+	margin: 0;
+	box-sizing: border-box;
+}
 
 .content {
 	display: flex;
@@ -15,6 +20,7 @@ html {
 	text-align: left;
 	margin: 0 auto;
 	padding: 1rem;
+	justify-content: center;
 }
 
 header {
@@ -61,8 +67,9 @@ body {
 	text-align: center;
 	margin-top: 40px;
 	margin-bottom: 30px;
-	width: 400px;
-	height: 400px;
+	flex: 1 1 auto;
+	width: 20vw;
+	height: 20vw;
 	overflow: hidden;
 	flex: 0 1 auto;
 	box-sizing: border-box;
@@ -73,7 +80,7 @@ body {
 }
 
 input[type='image'] {
-	width: 400px;
+	width: 20vw;
 }
 
 .quiz-block {
@@ -83,6 +90,12 @@ input[type='image'] {
 	background-color: white;
 	border-radius: 10px;
 	box-shadow: 20px 20px 20px black;
+}
+
+.radio-group {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
 }
 
 .start-button {
@@ -98,32 +111,38 @@ input[type='image'] {
 
 
 @media screen and (max-width: 420px) {
+	body {
+		font-size: 18px;
+	}
 	.quiz-option {
-		width: 125px;
-		height: 125px;
-		overflow: hidden;
+		width: 40%;
+		height: auto;
+		align-items: space-around;
 	}
 	
-	input[type='image'] {
-		width: 125px;
+	.quiz-question {
+		margin: 0;
+		font-size: 16px;
+	}
+
+	.quiz-option input {
+		width: 100%;
+		height: auto;
 	}
 }
 
 @media screen and (min-width: 421px) and (max-width: 1024px) {
+	body {
+		font-size: 16px;
+	}
 	.quiz-option {
-		height: 325px;
-		width: 325px;
+		height: 20vw;
+		width: 20vw;
 		overflow: hidden;
 	}
 
-	.start-layout {
-		position: fixed;
-		left: calc(50% - 83px);
-		top: 50%;
-	}
-
 	input[type='image'] {
-		width: 325px;
+		width: 20vw;
 	}
 }
 
