@@ -75,8 +75,8 @@ body {
 	box-sizing: border-box;
 }
 
-.quiz-option:hover {
-	border: 10px solid blue;
+.quiz-option:focus {
+	border: 2px solid blue;
 }
 
 input[type='image'] {
